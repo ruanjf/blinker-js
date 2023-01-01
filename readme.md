@@ -1,5 +1,15 @@
 # blinker JavaScript/TypeScript SDK  
 
+功能
+
+- 小爱同学电脑开机
+
+启动脚本
+```
+npm i
+npm run start
+```
+
 本SDK可用于 **Linux/Windows/MacOS** 设备MQTT接入  
 **亦适用于树莓派等带操作系统的嵌入式设备**  
 

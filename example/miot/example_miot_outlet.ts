@@ -1,7 +1,14 @@
 import { BlinkerDevice } from '../../lib/blinker';
 import { Miot, VA_TYPE } from '../../lib/voice-assistant';
+import { wake } from '../../wol';
 
-let device = new BlinkerDevice('');
+let config = {
+    device: '',
+    mac: '',
+    ip: ''
+}
+
+let device = new BlinkerDevice(config.device);
 
 let miot = device.addVoiceAssistant(new Miot(VA_TYPE.OUTLET));
 
@@ -11,6 +18,9 @@ device.ready().then(() => {
         // console.log(message.data);
         switch (message.data.set.pState) {
             case 'true':
+                wake(config.mac, {
+                    "address": config.ip
+                })
                 message.power('on').update();
                 break;
             case 'false':
