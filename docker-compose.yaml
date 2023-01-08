@@ -1,0 +1,10 @@
+services:
+  blinker:
+    image: node:18.12.1
+    # command: tail -f /dev/null
+    command: npm run start
+    ports:
+      - "80:80"
+    volumes:
+      - ./blinker-js:/app/blinker-js
+    working_dir: /app/blinker-js

@@ -98,8 +98,8 @@ export class VoiceAssistant {
                 try {
                     let messageString = u8aToString(message)
                     let messageObject = JSON.parse(messageString)
+                    fromDevice = messageObject.fromDevice
                     data = messageObject.data
-                    fromDevice = data.from
                     this.targetDevice = fromDevice
                     messageId = topic.split('/')[6]
                     vaLog(data, `${this.vaName}>device`)
@@ -108,7 +108,7 @@ export class VoiceAssistant {
                 }
                 console.log(fromDevice,this.vaName);
                 
-                if (fromDevice === this.vaName)
+                if (data.from === this.vaName)
                     this.processData(messageId, data)
             }
         })
@@ -208,10 +208,15 @@ export class VaMessage extends Message {
     }
 
     update() {
+        // see https://github.com/blinker-iot/blinker-js/pull/16
+        let messageId = {messageId:this.data.messageId}
+        this.response = Object.assign(this.response,messageId)
         let responseStr = JSON.stringify(this.response)
-        let data = `{ "fromDevice": "${this.device.config.deviceName}", "toDevice": "${this.voiceAssistant.vaName}_r", "data": ${responseStr}, "deviceType": "vAssistant"}`
-        let base64Data = Buffer.from(data).toString('base64')
-        this.device.mqttClient.publish(this.voiceAssistant.pubTopic + this.id, base64Data)
+        // let data = `{ "fromDevice": "${this.device.config.deviceName}", "toDevice": "${this.voiceAssistant.vaName}_r", "data": ${responseStr}, "deviceType": "vAssistant"}`
+        let data = `{ "fromDevice": "${this.device.config.deviceName}", "toDevice": "ServerReceiver", "data": ${responseStr}, "deviceType": "vAssistant"}`
+        // let base64Data = Buffer.from(data).toString('base64')
+        // this.device.mqttClient.publish(this.voiceAssistant.pubTopic + this.id, base64Data)
+        this.device.mqttClient.publish(this.voiceAssistant.pubTopic, data)
         vaLog(responseStr, `device>${this.voiceAssistant.vaName}`)
     }
 }
