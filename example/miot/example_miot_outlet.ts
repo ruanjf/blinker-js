@@ -18,15 +18,18 @@ device.ready().then(() => {
         // console.log(message.data);
         switch (message.data.set.pState) {
             case 'true':
+                console.log('miot power on');
                 wake(config.mac, {
                     "address": config.ip
                 })
                 message.power('on').update();
                 break;
             case 'false':
+                console.log('miot power off');
                 message.power('off').update();
                 break;
             default:
+                console.log('miot power none');
                 break;
         }
     })

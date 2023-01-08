@@ -98,8 +98,8 @@ export class VoiceAssistant {
                 try {
                     let messageString = u8aToString(message)
                     let messageObject = JSON.parse(messageString)
-                    fromDevice = messageObject.fromDevice
                     data = messageObject.data
+                    fromDevice = data.from
                     this.targetDevice = fromDevice
                     messageId = topic.split('/')[6]
                     vaLog(data, `${this.vaName}>device`)
@@ -108,7 +108,7 @@ export class VoiceAssistant {
                 }
                 console.log(fromDevice,this.vaName);
                 
-                if (fromDevice == this.vaName)
+                if (fromDevice === this.vaName)
                     this.processData(messageId, data)
             }
         })
