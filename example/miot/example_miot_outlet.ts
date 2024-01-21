@@ -3,9 +3,9 @@ import { Miot, VA_TYPE } from '../../lib/voice-assistant';
 import { wake } from '../../wol';
 
 let config = {
-    device: '',
-    mac: '',
-    ip: ''
+    device: process.env.BLINKER_DEVICE,
+    mac: process.env.WOL_MAC,
+    ip: process.env.WOL_IP
 }
 
 let device = new BlinkerDevice(config.device);
