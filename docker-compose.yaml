@@ -1,10 +1,8 @@
 services:
   blinker:
-    image: node:18.12.1
-    # command: tail -f /dev/null
-    command: npm run start
-    ports:
-      - "80:80"
-    volumes:
-      - ./blinker-js:/app/blinker-js
-    working_dir: /app/blinker-js
+    image: ruanjf/blinker-js:v0.0.2
+    restart: always
+    environment:
+      - BLINKER_DEVICE=
+      - WOL_MAC=xx-xx-xx-xx-xx-xx
+      - WOL_IP=192.168.1.xx

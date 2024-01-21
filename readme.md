@@ -1,5 +1,7 @@
 # blinker JavaScript/TypeScript SDK  
 
+[![Docker badge](https://img.shields.io/docker/v/ruanjf/blinker-js.svg?label=blinker-js)](https://hub.docker.com/r/ruanjf/blinker-js)
+
 功能
 
 - 小爱同学电脑开机
